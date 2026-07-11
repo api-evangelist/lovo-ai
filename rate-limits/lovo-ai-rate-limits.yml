@@ -1,0 +1,68 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: LOVO AI
+providerId: lovo-ai
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- AI
+- Text to Speech
+- TTS
+- Rate Limiting
+- Quotas
+description: >-
+  The Genny API enforces a documented per-account rate limit of 20 requests per
+  minute. Beyond request rate, throughput is bounded by two things - the input
+  size cap of 500 characters per TTS conversion, and the account's subscription
+  allowance (TTS credits/characters), which is drawn down by both app and API
+  usage. Keys without an active subscription are rejected with a 402. Generated
+  audio result URLs are valid for 24 hours and should be downloaded promptly.
+notes: >-
+  The 20 requests/min limit is stated in Genny's getting-started documentation
+  and tutorial. Per-tier monthly character/credit allowances are governed by the
+  subscription plan rather than a published per-endpoint quota; verify current
+  numbers on the LOVO pricing page.
+sources:
+- https://docs.genny.lovo.ai/reference/intro/getting-started
+- https://lovo.ai/tutorials/using-genny-api/getting-started-with-genny-api
+- https://api.genny.lovo.ai/api/docs-json
+responseCodes:
+  throttled: 429
+limits:
+- name: API Request Rate
+  scope: account
+  metric: requests
+  limit: 20 per minute
+  notes: Documented per-account rate limit across the Genny API.
+- name: TTS Input Size
+  scope: request
+  metric: characters
+  limit: 500 per conversion
+  notes: The text field on TTS requests is capped at 500 characters.
+- name: Subscription Allowance
+  scope: account
+  metric: characters
+  limit: per plan
+  notes: Monthly character/credit allowance is set by the subscription tier and consumed by app plus API usage.
+- name: Sync TTS Timeout
+  scope: request
+  metric: seconds
+  limit: 90
+  notes: POST /tts/sync returns a pending async job if synthesis exceeds 90 seconds.
+- name: Callback URLs
+  scope: request
+  metric: urls
+  limit: 4 per async job
+  notes: Async TTS jobs may register up to 4 callbackUrls; each receives a single POST that must return 2xx within 10 seconds.
+policies:
+- name: Subscription Gate
+  description: Requests from an API key without an active subscription are rejected with a 402 "No active subscription".
+- name: Result URL Expiry
+  description: Generated audio URLs expire 24 hours after creation and should be downloaded for further use.
+- name: Backoff Strategy
+  description: Clients should stay under 20 requests/min, implement exponential backoff with jitter, and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

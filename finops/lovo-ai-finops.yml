@@ -1,0 +1,92 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: LOVO AI
+providerId: lovo-ai
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- AI
+- Text to Speech
+- TTS
+- Voice Generation
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of LOVO AI (Genny) spend. LOVO is sold as monthly/annual
+  subscription tiers (Free, Basic, Pro, Pro+, Enterprise), each carrying a
+  character/credit allowance. API usage is not billed separately - TTS credits
+  are deducted from the account tied to the API key and draw down the same
+  subscription allowance used by the Genny app. The dominant cost driver is
+  therefore the number and length of TTS conversions (characters synthesized)
+  against the tier allowance, with tier upgrades or Enterprise agreements
+  covering higher volume.
+notes: >-
+  Per-tier character/credit allowances and overage handling are not reconciled
+  here; verify on the LOVO pricing page. There is a 20 requests/min rate limit
+  and a 500-character cap per conversion, both of which shape how usage
+  accumulates against the allowance.
+sources:
+- https://lovo.ai/pricing
+- https://help.lovo.ai/hc/en-us/articles/21884584355481-Do-you-provide-an-API
+- https://docs.genny.lovo.ai/reference/intro/getting-started
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: LOVO AI
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+focusColumns:
+  ServiceName: Genny by LOVO AI
+  ServiceCategory: AI and Machine Learning
+  ProviderName: LOVO AI
+  PublisherName: LOVO AI
+  InvoiceIssuerName: LOVO AI
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+meters:
+- name: characters_synthesized
+  description: Characters of text converted to speech via TTS conversions, drawn from the subscription allowance (max 500 per conversion).
+  unit: characters
+  aggregation: sum
+  dimensions:
+  - account
+  - speaker
+- name: tts_conversions
+  description: Number of TTS jobs submitted (sync and async), each deducting credits from the account.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - account
+- name: subscription_fee
+  description: Recurring monthly/annual subscription fee for the account's plan tier.
+  unit: subscription
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+principles:
+- name: Visibility
+  description: Track characters synthesized and TTS conversions per account/API key against the tier's allowance; read GET /api/v1/teams/status for subscription status and usage.
+- name: Allocation
+  description: Use separate API keys/accounts per workload or team so TTS credit consumption maps to internal cost centers.
+- name: Optimization
+  description: Keep conversions within the 500-character cap efficiently, cache/download the 24-hour audio URLs to avoid re-synthesizing, and right-size the subscription tier to actual monthly character volume.
+- name: Accountability
+  description: Assign an owner per account/tier and review monthly character usage against the plan allowance before it forces an upgrade.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

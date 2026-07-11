@@ -1,0 +1,147 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: LOVO AI
+providerId: lovo-ai
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- AI
+- Text to Speech
+- TTS
+- Voice Generation
+- Plans
+description: >-
+  LOVO AI (Genny) is sold as subscription tiers on top of a limited free plan.
+  API access requires an active paid subscription - keys without one receive a
+  402 "No active subscription" - and TTS credits are deducted from the account
+  associated with the API key. LOVO does not publish a separate API-only price
+  list; API usage draws down the character/credit allowance of the account's
+  subscription tier. The tier prices below are LOVO's published monthly web-app
+  subscription prices as reported publicly; they change over time and by billing
+  cycle (annual billing is discounted, commonly around 50 percent). Verify
+  current tiers, prices, and included allowances on the LOVO pricing page during
+  reconciliation.
+notes: >-
+  Prices are approximate published monthly figures and are NOT reconciled.
+  There is a per-account rate limit of 20 requests/min and a 500-character cap
+  per TTS conversion. Enterprise/API-scale usage is negotiated directly with
+  LOVO. Confirm everything on https://lovo.ai/pricing.
+sources:
+- https://lovo.ai/pricing
+- https://help.lovo.ai/hc/en-us/articles/21884584355481-Do-you-provide-an-API
+- https://docs.genny.lovo.ai/reference/intro/getting-started
+plans:
+- id: lovo-free
+  name: Free
+  type: free
+  description: >-
+    Free plan for evaluating the Genny app with a limited monthly allowance and
+    a restricted voice/feature set. Primarily an app trial; API access requires
+    a paid subscription.
+  entries:
+  - label: Included Allowance
+    name: free_allowance
+    type: usage
+    metric: characters
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0 (limited allowance)
+    userMultiplied: false
+  elements:
+  - name: Limited Voice Library
+  - name: App Access
+- id: lovo-basic
+  name: Basic
+  type: paid
+  description: >-
+    Entry paid tier for solo creators and small teams. Published at roughly
+    $24 per month (annual billing discounted). Unlocks the broader voice library
+    and the character/credit allowance drawn down by app and API usage.
+  entries:
+  - label: Monthly Subscription
+    name: basic_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$24/month (verify; annual discounted)
+    userMultiplied: false
+  elements:
+  - name: Expanded Voice Library
+  - name: API Access
+  - name: Commercial Rights
+- id: lovo-pro
+  name: Pro
+  type: paid
+  description: >-
+    Mid paid tier published at roughly $48 per month (annual billing
+    discounted), adding higher allowances, priority support, beta/premium
+    voices, and producer/advanced features on top of Basic.
+  entries:
+  - label: Monthly Subscription
+    name: pro_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$48/month (verify; annual discounted)
+    userMultiplied: false
+  elements:
+  - name: Higher Allowance
+  - name: Priority Support
+  - name: Premium and Beta Voices
+  - name: API Access
+- id: lovo-pro-plus
+  name: Pro+
+  type: paid
+  description: >-
+    Higher paid tier published at roughly $149 per month, aimed at heavy users
+    and small teams needing larger allowances and more seats/voices.
+  entries:
+  - label: Monthly Subscription
+    name: pro_plus_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$149/month (verify; annual discounted)
+    userMultiplied: false
+  elements:
+  - name: Large Allowance
+  - name: Team Seats
+  - name: Premium Voices
+  - name: API Access
+- id: lovo-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom plan for high-volume, API-scale, and organizational use, with
+    negotiated allowances, seats, security, and support. Contact LOVO sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume and Credits
+  - name: Dedicated Support
+  - name: Security and Compliance Review
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

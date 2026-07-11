@@ -1,0 +1,92 @@
+{
+  "info": {
+    "name": "LOVO AI Genny API",
+    "description": "REST API for LOVO AI's Genny text-to-speech and voice generation platform. Base URL: https://api.genny.lovo.ai. Every request is authenticated with the X-API-KEY header carrying a key generated at https://genny.lovo.ai (profile tab). API access requires an active subscription; TTS credits are deducted from the account. Rate limit is 20 requests/min, text is capped at 500 characters per conversion, and generated audio URLs are valid for 24 hours.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "X-API-KEY", "type": "string" },
+      { "key": "value", "value": "{{apiKey}}", "type": "string" },
+      { "key": "in", "value": "header", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.genny.lovo.ai/api/v1", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Text-to-Speech",
+      "item": [
+        {
+          "name": "Async TTS",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\",\n  \"speed\": 1\n}" },
+            "url": { "raw": "{{baseUrl}}/tts", "host": ["{{baseUrl}}"], "path": ["tts"] },
+            "description": "Submit an asynchronous text-to-speech job. Returns a job with an id to poll via GET /tts/{jobId}. Optionally supply callbackUrls (max 4) to receive a POST webhook on completion."
+          }
+        },
+        {
+          "name": "Sync TTS",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\",\n  \"speed\": 1\n}" },
+            "url": { "raw": "{{baseUrl}}/tts/sync", "host": ["{{baseUrl}}"], "path": ["tts", "sync"] },
+            "description": "Convert text to speech synchronously. Has a 90-second timeout; if synthesis is not complete in time it returns a pending async job to poll."
+          }
+        },
+        {
+          "name": "Async Retrieve Job",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/tts/:jobId", "host": ["{{baseUrl}}"], "path": ["tts", ":jobId"], "variable": [{ "key": "jobId", "value": "643e383551e2730025c5ae69" }] },
+            "description": "Retrieve a TTS job by id. Returns generated audio URLs (valid 24 hours) once the job is completed."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Speakers",
+      "item": [
+        {
+          "name": "Retrieve Speakers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/speakers?sort=displayName:1&page=0&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["speakers"],
+              "query": [
+                { "key": "sort", "value": "displayName:1", "description": "Sort by displayName, locale, gender, speakerType, or ageRange. No whitespace." },
+                { "key": "page", "value": "0", "description": "Number of pages to skip." },
+                { "key": "limit", "value": "20", "description": "Number of speakers per page." }
+              ]
+            },
+            "description": "Retrieve all speakers with optional filtering, sorting, and pagination. Each speaker includes id, locale, gender, avatar, age range, and available styles with sample audio URLs."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "Get Team Billing Information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/teams/status", "host": ["{{baseUrl}}"], "path": ["teams", "status"] },
+            "description": "Get team billing and usage information for the account associated with the API key - team name, subscription status/interval, current period, and metered usage."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LOVO AI Genny API",
+    "version": "1.0",
+    "description": "REST API for LOVO AI's Genny text-to-speech and voice generation platform. Base URL https://api.genny.lovo.ai. Authenticated with the X-API-KEY header. API access requires an active subscription; rate limit 20 requests/min; text capped at 500 characters per conversion; audio URLs valid 24 hours."
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "X-API-KEY",
+        "value": "{{apiKey}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Text-to-Speech", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Async TTS", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.genny.lovo.ai/api/v1/tts",
+            "body": { "type": "json", "data": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\",\n  \"speed\": 1\n}" }
+          },
+          "docs": "Submit an asynchronous text-to-speech job. Returns a job with an id to poll via GET /tts/{jobId}. Optional callbackUrls (max 4) receive a POST webhook on completion."
+        },
+        {
+          "info": { "name": "Sync TTS", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.genny.lovo.ai/api/v1/tts/sync",
+            "body": { "type": "json", "data": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\",\n  \"speed\": 1\n}" }
+          },
+          "docs": "Convert text to speech synchronously. 90-second timeout; returns a pending async job if synthesis exceeds the timeout."
+        },
+        {
+          "info": { "name": "Async Retrieve Job", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.genny.lovo.ai/api/v1/tts/:jobId",
+            "params": [
+              { "name": "jobId", "value": "643e383551e2730025c5ae69", "type": "path", "description": "The job id returned by a TTS request." }
+            ]
+          },
+          "docs": "Retrieve a TTS job by id. Returns generated audio URLs (valid 24 hours) once completed."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Speakers", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Retrieve Speakers", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.genny.lovo.ai/api/v1/speakers",
+            "params": [
+              { "name": "sort", "value": "displayName:1", "type": "query", "description": "Sort by displayName, locale, gender, speakerType, or ageRange. No whitespace." },
+              { "name": "page", "value": "0", "type": "query", "description": "Number of pages to skip." },
+              { "name": "limit", "value": "20", "type": "query", "description": "Number of speakers per page." }
+            ]
+          },
+          "docs": "Retrieve all speakers with optional filtering, sorting, and pagination. Each speaker includes id, locale, gender, avatar, age range, and available styles with sample audio URLs."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Teams", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get Team Billing Information", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.genny.lovo.ai/api/v1/teams/status"
+          },
+          "docs": "Get team billing and usage information for the account associated with the API key - team name, subscription status/interval, current period, and metered usage."
+        }
+      ]
+    }
+  ]
+}

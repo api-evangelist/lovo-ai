@@ -1,0 +1,83 @@
+aid: lovo-ai
+name: LOVO AI
+review:
+  question: Does LOVO AI expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. LOVO AI's Genny API is entirely
+    request/response REST over HTTPS. There is no server-push transport
+    (WebSocket or SSE) on the public API. Asynchronous TTS is handled with a
+    job model - submit a job, then either poll GET /api/v1/tts/{jobId} or
+    register callbackUrls (max 4) that receive a single HTTP POST webhook on
+    completion. A webhook callback is server-to-endpoint HTTP, not a streaming
+    or bidirectional socket, so there is nothing to model in AsyncAPI.
+findings:
+  summary: |
+    LOVO AI does not publish a documented public WebSocket API. LOVO AI is an
+    AI text-to-speech and voice generation company; its Genny product exposes a
+    REST API at base https://api.genny.lovo.ai, authenticated with an X-API-KEY
+    header carrying a key generated at https://genny.lovo.ai. The published
+    OpenAPI 3.0 document (https://api.genny.lovo.ai/api/docs-json) describes
+    five request/response REST endpoints across Text-to-Speech, Speakers, and
+    Teams. Long-running text-to-speech uses an asynchronous job model with
+    polling or an optional one-shot HTTP callback webhook - not a WebSocket.
+    No realtime, bidirectional, or audio-streaming WebSocket (ws:// or wss://)
+    endpoint is documented anywhere in the Genny API reference as of the review
+    date.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.genny.lovo.ai
+      documented: true
+      note: All five documented Genny API endpoints are HTTPS request/response REST, authenticated with the X-API-KEY header.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Async TTS jobs may register up to 4 callbackUrls that receive one HTTP POST on completion. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in the Genny API reference or OpenAPI document as of the review date.
+  endpointsConfirmedRest:
+    - POST https://api.genny.lovo.ai/api/v1/tts
+    - POST https://api.genny.lovo.ai/api/v1/tts/sync
+    - GET  https://api.genny.lovo.ai/api/v1/tts/{jobId}
+    - GET  https://api.genny.lovo.ai/api/v1/speakers
+    - GET  https://api.genny.lovo.ai/api/v1/teams/status
+  accessModel: |
+    API access requires a LOVO AI (Genny) account with an active subscription;
+    a 402 "No active subscription" is returned to keys without one. TTS credits
+    are deducted from the account associated with the API key. There is a rate
+    limit of 20 requests per minute. Input text is capped at 500 characters per
+    conversion, and generated audio URLs are valid for 24 hours.
+sources:
+  - url: https://api.genny.lovo.ai/api/docs-json
+    type: OpenAPI
+    note: Published OpenAPI 3.0 document. Security scheme is apiKey in header named X-API-KEY. Five REST paths; no WebSocket.
+  - url: https://docs.genny.lovo.ai/reference/intro/getting-started
+    type: Documentation
+    note: Getting started - X-API-KEY auth, 20 requests/min rate limit, key from genny.lovo.ai profile tab.
+  - url: https://docs.genny.lovo.ai/reference/async-tts
+    type: APIReference
+    note: POST /api/v1/tts async job with optional callbackUrls webhook. No socket.
+  - url: https://docs.genny.lovo.ai/reference/sync-tts
+    type: APIReference
+    note: POST /api/v1/tts/sync with a 90-second timeout, falling back to the async job model.
+  - url: https://docs.genny.lovo.ai/reference/retrieve-speakers
+    type: APIReference
+    note: GET /api/v1/speakers with sort/page/limit query params.
+  - url: https://lovo.ai/tutorials/using-genny-api/getting-started-with-genny-api
+    type: Documentation
+    note: Tutorial confirming base URL, X-API-KEY, and the 20 req/min rate limit.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. The Genny API is request/response
+    REST with an asynchronous TTS job model (polling plus optional HTTP
+    callback webhooks). No AsyncAPI document was created because there is no
+    server-push or bidirectional streaming transport on LOVO AI's own public
+    API to model.

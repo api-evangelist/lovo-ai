@@ -1,0 +1,132 @@
+aid: lovo-ai
+url: https://raw.githubusercontent.com/api-evangelist/lovo-ai/refs/heads/main/apis.yml
+name: LOVO AI
+kind: company
+description: >-
+  LOVO AI is an AI text-to-speech and voice generation platform whose flagship
+  product, Genny, turns text into natural-sounding speech across a large library
+  of speakers, locales, and speaker styles, plus AI voice cloning and voiceover
+  tooling. The Genny API is a REST API (base https://api.genny.lovo.ai)
+  authenticated with an X-API-KEY header. It exposes synchronous and
+  asynchronous text-to-speech conversions, a speakers/voices catalog with
+  styles, per-conversion pronunciation, pause, and emphasis controls, and a
+  team billing/usage endpoint. TTS credits are deducted from the account tied to
+  the API key, and generated audio URLs are valid for 24 hours.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- AI
+- Text to Speech
+- TTS
+- Voice Generation
+- Voice Cloning
+- Speech Synthesis
+- Voiceover
+created: '2026-07-11'
+modified: '2026-07-11'
+specificationVersion: '0.19'
+apis:
+- aid: lovo-ai:lovo-ai-text-to-speech-api
+  name: LOVO AI Text-to-Speech API
+  tags:
+  - Text to Speech
+  - Conversions
+  - TTS
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.genny.lovo.ai/reference/async-tts
+  baseURL: https://api.genny.lovo.ai/api/v1
+  properties:
+  - url: https://docs.genny.lovo.ai/reference/intro/getting-started
+    type: Documentation
+  - url: https://docs.genny.lovo.ai/reference/async-tts
+    type: APIReference
+  - url: openapi/lovo-ai-openapi.yml
+    type: OpenAPI
+  - url: collections/lovo-ai.postman_collection.json
+    type: PostmanCollection
+  - url: collections/lovo-ai.opencollection.json
+    type: OpenCollection
+  description: >-
+    Convert text into natural-sounding speech. Submit an asynchronous job
+    (POST /tts) and poll or receive a callback, or run a synchronous conversion
+    (POST /tts/sync) with a 90-second timeout, then retrieve results and audio
+    URLs by job id (GET /tts/{jobId}). Requests take text (up to 500 chars),
+    a speaker id, an optional speaker style, and speed.
+- aid: lovo-ai:lovo-ai-speakers-api
+  name: LOVO AI Speakers API
+  tags:
+  - Speakers
+  - Voices
+  - Catalog
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.genny.lovo.ai/reference/retrieve-speakers
+  baseURL: https://api.genny.lovo.ai/api/v1
+  properties:
+  - url: https://docs.genny.lovo.ai/reference/retrieve-speakers
+    type: APIReference
+  - url: openapi/lovo-ai-openapi.yml
+    type: OpenAPI
+  - url: collections/lovo-ai.postman_collection.json
+    type: PostmanCollection
+  - url: collections/lovo-ai.opencollection.json
+    type: OpenCollection
+  description: >-
+    Browse the Genny voice catalog. Retrieve speakers (GET /speakers) with
+    pagination and sorting by displayName, locale, gender, speakerType, and
+    ageRange. Each speaker exposes its id, locale, gender, avatar, age range,
+    and available speaker styles with sample audio URLs - the speaker ids used
+    when requesting a TTS conversion.
+- aid: lovo-ai:lovo-ai-pronunciation-api
+  name: LOVO AI Pronunciation and Prosody
+  tags:
+  - Pronunciation
+  - Pause
+  - Emphasis
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.genny.lovo.ai/reference/sync-tts
+  baseURL: https://api.genny.lovo.ai/api/v1
+  properties:
+  - url: https://docs.genny.lovo.ai/reference/sync-tts
+    type: Documentation
+  - url: openapi/lovo-ai-openapi.yml
+    type: OpenAPI
+  description: >-
+    Pronunciation, pause, and emphasis controls applied to a TTS conversion.
+    These are modeled honestly as data structures on the TTS output (word-level
+    pronunciation replacements, timed pauses of 0-2 seconds, and emphasis
+    markers), not as a standalone endpoint - they are carried within the
+    text-to-speech job payload rather than a dedicated /pronunciations resource.
+- aid: lovo-ai:lovo-ai-teams-billing-api
+  name: LOVO AI Teams and Billing API
+  tags:
+  - Billing
+  - Usage
+  - Teams
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.genny.lovo.ai/reference/intro/getting-started
+  baseURL: https://api.genny.lovo.ai/api/v1
+  properties:
+  - url: https://docs.genny.lovo.ai/reference/intro/getting-started
+    type: Documentation
+  - url: openapi/lovo-ai-openapi.yml
+    type: OpenAPI
+  description: >-
+    Read team billing and usage information for the account tied to the API key
+    (GET /teams/status). Returns the team name, subscription status and billing
+    interval, current period start/end, and metered usage entries - useful for
+    tracking API credit consumption.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/lovo-ai
+- type: Website
+  url: https://lovo.ai
+- type: Documentation
+  url: https://docs.genny.lovo.ai
+- type: Plans
+  url: plans/lovo-ai-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/lovo-ai-rate-limits.yml
+- type: FinOps
+  url: finops/lovo-ai-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
