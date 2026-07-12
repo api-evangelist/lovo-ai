@@ -115,6 +115,10 @@ apis:
     interval, current period start/end, and metered usage entries - useful for
     tracking API credit consumption.
 common:
+- type: DomainSecurity
+  url: security/lovo-ai-domain-security.yml
+- type: Authentication
+  url: authentication/lovo-ai-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/lovo-ai
 - type: Website

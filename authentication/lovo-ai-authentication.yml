@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/lovo-ai-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: X-API-KEY
+  type: apiKey
+  in: header
+  parameter: X-API-KEY
+  description: API key generated at https://genny.lovo.ai (profile tab).
+  sources:
+  - openapi/lovo-ai-openapi.yml
