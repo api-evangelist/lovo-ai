@@ -115,6 +115,8 @@ apis:
     interval, current period start/end, and metered usage entries - useful for
     tracking API credit consumption.
 common:
+- type: AgenticAccess
+  url: agentic-access/lovo-ai-agentic-access.yml
 - type: DomainSecurity
   url: security/lovo-ai-domain-security.yml
 - type: Authentication
