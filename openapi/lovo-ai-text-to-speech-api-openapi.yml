@@ -1,0 +1,361 @@
+openapi: 3.0.0
+info:
+  title: LOVO AI Genny Speakers Text-to-Speech API
+  version: '1.0'
+  description: REST API for LOVO AI's Genny text-to-speech and AI voice generation platform. Convert text into natural-sounding speech (synchronously or asynchronously), browse the speaker/voice catalog with its styles, and read team billing/usage information. Authenticate every request with the X-API-KEY header carrying an API key generated at https://genny.lovo.ai. TTS credits are deducted from the account associated with the API key. Generated audio URLs are valid for 24 hours and should be downloaded for further use. Endpoints and schemas here are grounded in Genny's published OpenAPI document at https://api.genny.lovo.ai/api/docs-json.
+  contact:
+    name: LOVO AI
+    url: https://lovo.ai
+servers:
+- url: https://api.genny.lovo.ai
+  description: Genny API production
+security:
+- X-API-KEY: []
+tags:
+- name: Text-to-Speech
+  description: Convert text to speech synchronously or asynchronously and retrieve job results.
+paths:
+  /api/v1/tts:
+    post:
+      operationId: async-tts
+      summary: Async TTS
+      description: Returns a TTS job. Poll the job status with GET /api/v1/tts/{jobId} using the returned id, or supply callbackUrls to be notified on completion.
+      tags:
+      - Text-to-Speech
+      security:
+      - X-API-KEY: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextToSpeechRequest'
+            examples:
+              default:
+                value:
+                  speaker: 640f477d2babeb0024be422b
+                  text: Welcome to Genny!
+      responses:
+        '201':
+          description: Job entity used to fetch the status of the TTS job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetJobResponse'
+        '400':
+          description: API key expired
+        '401':
+          description: API key invalid
+        '402':
+          description: No active subscription
+        '422':
+          description: API key not found
+  /api/v1/tts/sync:
+    post:
+      operationId: sync-tts
+      summary: Sync TTS
+      description: Convert text to speech synchronously. Has a timeout of 90 seconds; if the process does not complete in time, it returns a pending TTS job (like Async TTS) whose status can be checked with GET /api/v1/tts/{jobId}.
+      tags:
+      - Text-to-Speech
+      security:
+      - X-API-KEY: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextToSpeechSyncRequest'
+            examples:
+              default:
+                value:
+                  speaker: 640f477d2babeb0024be422b
+                  text: Welcome to Genny!
+      responses:
+        '201':
+          description: Generated audio URLs if completed within 90 seconds, otherwise an incomplete TTS job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextToSpeechSyncResponse'
+        '400':
+          description: API key expired
+        '401':
+          description: API key invalid
+        '402':
+          description: No active subscription
+        '422':
+          description: API key not found
+  /api/v1/tts/{jobId}:
+    get:
+      operationId: async-retrieve-job
+      summary: Async Retrieve Job
+      description: Retrieve a TTS job by id. Returns generated audio URLs if the job is successfully completed.
+      tags:
+      - Text-to-Speech
+      security:
+      - X-API-KEY: []
+      parameters:
+      - name: jobId
+        in: path
+        required: true
+        description: The job id returned by an Async or Sync TTS request.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The TTS job, including audio URLs when completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextToSpeechResponse'
+        '400':
+          description: API key expired
+        '401':
+          description: API key invalid
+        '422':
+          description: Job not found
+components:
+  schemas:
+    TextToSpeechResponse:
+      allOf:
+      - $ref: '#/components/schemas/GetJobResponse'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/TextToSpeechOutput'
+        required:
+        - data
+    JobErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    GetJobResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 643e383551e2730025c5ae69
+          description: Job ID used to check the progress of the TTS job.
+        type:
+          type: string
+          enum:
+          - tts
+          - simple_tts
+          - dubbing
+          - localization
+          - subtitles
+          description: Type of the job. Currently only TTS is supported.
+        status:
+          type: string
+          enum:
+          - in_progress
+          - done
+        progress:
+          type: number
+        team:
+          type: string
+        workspace:
+          type: string
+        project:
+          type: string
+        error:
+          $ref: '#/components/schemas/JobErrorResponse'
+        createdAt:
+          type: string
+          format: date-time
+          description: TTS requested time.
+        estimatedTimeAt:
+          type: string
+          format: date-time
+        estimatedTimeMs:
+          type: number
+        callbackUrls:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - type
+      - status
+      - progress
+      - team
+      - createdAt
+      - callbackUrls
+    TextToSpeechSyncRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 500
+          description: Text to be converted to audio.
+          example: Welcome to Genny!
+        speaker:
+          type: string
+          description: Speaker ID retrieved from the Retrieve Speakers endpoint.
+          example: 640f477d2babeb0024be422b
+        speakerStyle:
+          type: string
+          description: Speaker style ID for the chosen speaker.
+        speed:
+          type: number
+          default: 1
+          minimum: 0.05
+          maximum: 3
+          description: Speed of the generated audio.
+      required:
+      - text
+      - speaker
+    TextToSpeechSyncResponse:
+      allOf:
+      - $ref: '#/components/schemas/GetJobResponse'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/TextToSpeechOutput'
+        required:
+        - data
+    Emphasis:
+      type: object
+      description: An emphasis marker applied at a position within the synthesized text.
+      properties:
+        position:
+          type: number
+          description: Character position at which emphasis is applied.
+        value:
+          type: number
+          enum:
+          - 0.25
+          - 0.5
+          - 0.75
+          description: Emphasis strength.
+      required:
+      - position
+      - value
+    Pronunciation:
+      type: object
+      description: A word-level pronunciation override applied to a TTS conversion.
+      properties:
+        sourceWord:
+          type: string
+          description: The original word as written in the input text.
+        targetWord:
+          type: string
+          description: The replacement spelling/phonetic form used for synthesis.
+        isReplaced:
+          type: boolean
+          description: Whether the source word was replaced during synthesis.
+      required:
+      - sourceWord
+      - targetWord
+      - isReplaced
+    Pause:
+      type: object
+      description: A pause inserted at a position within the synthesized text.
+      properties:
+        position:
+          type: number
+          description: Character position at which the pause is inserted.
+        value:
+          type: number
+          minimum: 0
+          maximum: 2
+          description: Pause duration in seconds (0 to 2).
+      required:
+      - position
+      - value
+    TextToSpeechRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 500
+          description: Text to be converted to audio.
+          example: Welcome to Genny!
+        speaker:
+          type: string
+          description: Speaker ID retrieved from the Retrieve Speakers endpoint.
+          example: 640f477d2babeb0024be422b
+        speakerStyle:
+          type: string
+          description: Speaker style ID for the chosen speaker. Only some speakers have multiple styles.
+        speed:
+          type: number
+          default: 1
+          minimum: 0.05
+          maximum: 3
+          description: Speed of the generated audio.
+        callbackUrls:
+          type: array
+          maxItems: 4
+          items:
+            type: string
+          description: Callback URLs for an async job (max 4). A single POST callback with the same payload as the Async Retrieve Job endpoint is sent on completion. Endpoints must return a 2xx within 10 seconds.
+      required:
+      - text
+      - speaker
+    TextToSpeechOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - pending
+          - succeeded
+          - failed
+          description: Status of the individual TTS output.
+        text:
+          type: string
+        speaker:
+          type: string
+        speakerStyle:
+          type: string
+        speed:
+          type: number
+        pause:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pause'
+        emphasis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Emphasis'
+        pronunciations:
+          type: array
+          default: []
+          items:
+            $ref: '#/components/schemas/Pronunciation'
+          description: Pronunciations applied to the TTS request.
+        urls:
+          type: array
+          items:
+            type: string
+          description: Audio URLs of the TTS result (valid for 24 hours).
+        error:
+          $ref: '#/components/schemas/JobErrorResponse'
+      required:
+      - status
+      - text
+      - speaker
+      - speakerStyle
+      - speed
+      - pause
+      - emphasis
+      - pronunciations
+  securitySchemes:
+    X-API-KEY:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key generated at https://genny.lovo.ai (profile tab).

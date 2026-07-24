@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  title: LOVO AI Genny Speakers API
+  version: '1.0'
+  description: REST API for LOVO AI's Genny text-to-speech and AI voice generation platform. Convert text into natural-sounding speech (synchronously or asynchronously), browse the speaker/voice catalog with its styles, and read team billing/usage information. Authenticate every request with the X-API-KEY header carrying an API key generated at https://genny.lovo.ai. TTS credits are deducted from the account associated with the API key. Generated audio URLs are valid for 24 hours and should be downloaded for further use. Endpoints and schemas here are grounded in Genny's published OpenAPI document at https://api.genny.lovo.ai/api/docs-json.
+  contact:
+    name: LOVO AI
+    url: https://lovo.ai
+servers:
+- url: https://api.genny.lovo.ai
+  description: Genny API production
+security:
+- X-API-KEY: []
+tags:
+- name: Speakers
+  description: Retrieve the catalog of speakers/voices and their styles.
+paths:
+  /api/v1/speakers:
+    get:
+      operationId: retrieve-speakers
+      summary: Retrieve speakers
+      description: Retrieve all speakers with optional filtering and sorting. Supports pagination.
+      tags:
+      - Speakers
+      security:
+      - X-API-KEY: []
+      parameters:
+      - name: sort
+        in: query
+        required: false
+        description: Sort by given order. Available fields are displayName, locale, gender, speakerType, and ageRange. Example "displayName:1" (no whitespace).
+        schema:
+          type: array
+          default:
+          - displayName:1
+          items:
+            type: string
+      - name: page
+        in: query
+        required: false
+        description: Number of pages to skip.
+        schema:
+          type: number
+      - name: limit
+        in: query
+        required: false
+        description: Number of speakers in each page.
+        schema:
+          type: number
+      responses:
+        '200':
+          description: A paginated list of speakers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResDto'
+        '400':
+          description: API key expired
+        '401':
+          description: API key invalid
+        '422':
+          description: API key not found
+components:
+  schemas:
+    GetSpeakersApiResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Speaker ID.
+        displayName:
+          type: string
+          description: Name of the speaker.
+        locale:
+          type: string
+          description: Locale of the speaker (for example en-US, en-GB, ko-KR).
+        gender:
+          type: string
+          enum:
+          - male
+          - female
+          - other
+        imageUrl:
+          type: string
+          description: Avatar URL of the speaker.
+        ageRange:
+          type: string
+          enum:
+          - child
+          - children
+          - young_adult
+          - mature
+          - mature_adult
+          - old
+          - other
+        speakerStyles:
+          $ref: '#/components/schemas/PublicSpeakerStyleResType'
+      required:
+      - id
+      - displayName
+      - locale
+      - gender
+      - imageUrl
+    PublicSpeakerStyleResType:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        deprecated:
+          type: boolean
+          description: Deprecated speaker styles should not be used in the TTS API.
+        sampleTtsUrl:
+          type: string
+          description: Sample TTS URL to preview the voice of the speaker.
+      required:
+      - id
+      - displayName
+      - deprecated
+      - sampleTtsUrl
+    PaginatedResDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+          description: Total item count available for pagination.
+        count:
+          type: number
+          description: Item count for the current page.
+        page:
+          type: number
+          description: Current page number.
+        limit:
+          type: number
+          description: Limit of items per page.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetSpeakersApiResponse'
+      required:
+      - totalCount
+      - count
+      - data
+  securitySchemes:
+    X-API-KEY:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key generated at https://genny.lovo.ai (profile tab).

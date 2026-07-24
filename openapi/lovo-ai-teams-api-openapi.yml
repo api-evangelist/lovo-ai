@@ -1,0 +1,127 @@
+openapi: 3.0.0
+info:
+  title: LOVO AI Genny Speakers Teams API
+  version: '1.0'
+  description: REST API for LOVO AI's Genny text-to-speech and AI voice generation platform. Convert text into natural-sounding speech (synchronously or asynchronously), browse the speaker/voice catalog with its styles, and read team billing/usage information. Authenticate every request with the X-API-KEY header carrying an API key generated at https://genny.lovo.ai. TTS credits are deducted from the account associated with the API key. Generated audio URLs are valid for 24 hours and should be downloaded for further use. Endpoints and schemas here are grounded in Genny's published OpenAPI document at https://api.genny.lovo.ai/api/docs-json.
+  contact:
+    name: LOVO AI
+    url: https://lovo.ai
+servers:
+- url: https://api.genny.lovo.ai
+  description: Genny API production
+security:
+- X-API-KEY: []
+tags:
+- name: Teams
+  description: Read team billing and usage information for the API key's account.
+paths:
+  /api/v1/teams/status:
+    get:
+      operationId: get-team-billing-information
+      summary: Get team billing information
+      description: Get team billing and usage information for the account associated with the API key.
+      tags:
+      - Teams
+      security:
+      - X-API-KEY: []
+      responses:
+        '200':
+          description: Team billing information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiTeamBillingInformationResDto'
+        '400':
+          description: API key expired
+        '401':
+          description: API key invalid
+        '422':
+          description: API key not found
+components:
+  schemas:
+    ApiUsageResDto:
+      type: object
+      properties:
+        type:
+          type: string
+        unit:
+          type: string
+        amount:
+          type: string
+        currentPeriodStart:
+          type: string
+          format: date-time
+        currentPeriodEnd:
+          type: string
+          format: date-time
+      required:
+      - type
+      - unit
+      - amount
+    Subscription:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - active
+          - pending_pause
+          - paused
+          - trialing
+          - past_due
+          - canceled
+          - unpaid
+          - incomplete
+          - incomplete_expired
+        currentPeriodStart:
+          type: string
+          format: date-time
+        currentPeriodEnd:
+          type: string
+          format: date-time
+        description:
+          type: string
+        priceInterval:
+          type: string
+          enum:
+          - year
+          - month
+          - onetime
+          - day
+        usage:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiUsageResDto'
+      required:
+      - status
+      - currentPeriodStart
+      - currentPeriodEnd
+      - priceInterval
+      - usage
+    ApiTeamBillingInformationResDto:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/TeamForApiResDto'
+        subscription:
+          $ref: '#/components/schemas/Subscription'
+      required:
+      - team
+      - subscription
+    TeamForApiResDto:
+      type: object
+      properties:
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+      - name
+      - createdAt
+  securitySchemes:
+    X-API-KEY:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key generated at https://genny.lovo.ai (profile tab).
