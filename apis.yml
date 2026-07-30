@@ -12,7 +12,20 @@ description: >-
   styles, per-conversion pronunciation, pause, and emphasis controls, and a
   team billing/usage endpoint. TTS credits are deducted from the account tied to
   the API key, and generated audio URLs are valid for 24 hours.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/lovo-ai.png
 tags:
 - AI
 - Text to Speech
@@ -25,95 +38,72 @@ created: '2026-07-11'
 modified: '2026-07-11'
 specificationVersion: '0.19'
 apis:
-- aid: lovo-ai:lovo-ai-text-to-speech-api
-  name: LOVO AI Text-to-Speech API
-  tags:
-  - Text to Speech
-  - Conversions
-  - TTS
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.genny.lovo.ai/reference/async-tts
-  baseURL: https://api.genny.lovo.ai/api/v1
-  properties:
-  - url: https://docs.genny.lovo.ai/reference/intro/getting-started
-    type: Documentation
-  - url: https://docs.genny.lovo.ai/reference/async-tts
-    type: APIReference
-  - url: openapi/lovo-ai-openapi.yml
-    type: OpenAPI
-  - url: collections/lovo-ai.postman_collection.json
-    type: PostmanCollection
-  - url: collections/lovo-ai.opencollection.json
-    type: OpenCollection
-  description: >-
-    Convert text into natural-sounding speech. Submit an asynchronous job
-    (POST /tts) and poll or receive a callback, or run a synchronous conversion
-    (POST /tts/sync) with a 90-second timeout, then retrieve results and audio
-    URLs by job id (GET /tts/{jobId}). Requests take text (up to 500 chars),
-    a speaker id, an optional speaker style, and speed.
 - aid: lovo-ai:lovo-ai-speakers-api
   name: LOVO AI Speakers API
+  description: Retrieve the catalog of speakers/voices and their styles.
+  humanURL: https://docs.genny.lovo.ai/reference/async-tts
+  baseURL: https://api.genny.lovo.ai/api/v1
   tags:
   - Speakers
-  - Voices
-  - Catalog
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.genny.lovo.ai/reference/retrieve-speakers
-  baseURL: https://api.genny.lovo.ai/api/v1
   properties:
-  - url: https://docs.genny.lovo.ai/reference/retrieve-speakers
-    type: APIReference
-  - url: openapi/lovo-ai-openapi.yml
-    type: OpenAPI
-  - url: collections/lovo-ai.postman_collection.json
-    type: PostmanCollection
-  - url: collections/lovo-ai.opencollection.json
-    type: OpenCollection
-  description: >-
-    Browse the Genny voice catalog. Retrieve speakers (GET /speakers) with
-    pagination and sorting by displayName, locale, gender, speakerType, and
-    ageRange. Each speaker exposes its id, locale, gender, avatar, age range,
-    and available speaker styles with sample audio URLs - the speaker ids used
-    when requesting a TTS conversion.
-- aid: lovo-ai:lovo-ai-pronunciation-api
-  name: LOVO AI Pronunciation and Prosody
-  tags:
-  - Pronunciation
-  - Pause
-  - Emphasis
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.genny.lovo.ai/reference/sync-tts
+  - type: OpenAPI
+    url: openapi/lovo-ai-speakers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.genny.lovo.ai/reference/intro/getting-started
+  - type: APIReference
+    url: https://docs.genny.lovo.ai/reference/async-tts
+  - type: PostmanCollection
+    url: collections/lovo-ai.postman_collection.json
+  - type: OpenCollection
+    url: collections/lovo-ai.opencollection.json
+  - type: APIReference
+    url: https://docs.genny.lovo.ai/reference/retrieve-speakers
+  - type: Documentation
+    url: https://docs.genny.lovo.ai/reference/sync-tts
+- aid: lovo-ai:lovo-ai-teams-api
+  name: LOVO AI Teams API
+  description: Read team billing and usage information for the API key's account.
+  humanURL: https://docs.genny.lovo.ai/reference/async-tts
   baseURL: https://api.genny.lovo.ai/api/v1
-  properties:
-  - url: https://docs.genny.lovo.ai/reference/sync-tts
-    type: Documentation
-  - url: openapi/lovo-ai-openapi.yml
-    type: OpenAPI
-  description: >-
-    Pronunciation, pause, and emphasis controls applied to a TTS conversion.
-    These are modeled honestly as data structures on the TTS output (word-level
-    pronunciation replacements, timed pauses of 0-2 seconds, and emphasis
-    markers), not as a standalone endpoint - they are carried within the
-    text-to-speech job payload rather than a dedicated /pronunciations resource.
-- aid: lovo-ai:lovo-ai-teams-billing-api
-  name: LOVO AI Teams and Billing API
   tags:
-  - Billing
-  - Usage
   - Teams
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.genny.lovo.ai/reference/intro/getting-started
-  baseURL: https://api.genny.lovo.ai/api/v1
   properties:
-  - url: https://docs.genny.lovo.ai/reference/intro/getting-started
-    type: Documentation
-  - url: openapi/lovo-ai-openapi.yml
-    type: OpenAPI
-  description: >-
-    Read team billing and usage information for the account tied to the API key
-    (GET /teams/status). Returns the team name, subscription status and billing
-    interval, current period start/end, and metered usage entries - useful for
-    tracking API credit consumption.
+  - type: OpenAPI
+    url: openapi/lovo-ai-teams-api-openapi.yml
+  - type: Documentation
+    url: https://docs.genny.lovo.ai/reference/intro/getting-started
+  - type: APIReference
+    url: https://docs.genny.lovo.ai/reference/async-tts
+  - type: PostmanCollection
+    url: collections/lovo-ai.postman_collection.json
+  - type: OpenCollection
+    url: collections/lovo-ai.opencollection.json
+  - type: APIReference
+    url: https://docs.genny.lovo.ai/reference/retrieve-speakers
+  - type: Documentation
+    url: https://docs.genny.lovo.ai/reference/sync-tts
+- aid: lovo-ai:lovo-ai-text-to-speech-api
+  name: LOVO AI Text-to-Speech API
+  description: Convert text to speech synchronously or asynchronously and retrieve job results.
+  humanURL: https://docs.genny.lovo.ai/reference/async-tts
+  baseURL: https://api.genny.lovo.ai/api/v1
+  tags:
+  - Text-to-Speech
+  properties:
+  - type: OpenAPI
+    url: openapi/lovo-ai-text-to-speech-api-openapi.yml
+  - type: Documentation
+    url: https://docs.genny.lovo.ai/reference/intro/getting-started
+  - type: APIReference
+    url: https://docs.genny.lovo.ai/reference/async-tts
+  - type: PostmanCollection
+    url: collections/lovo-ai.postman_collection.json
+  - type: OpenCollection
+    url: collections/lovo-ai.opencollection.json
+  - type: APIReference
+    url: https://docs.genny.lovo.ai/reference/retrieve-speakers
+  - type: Documentation
+    url: https://docs.genny.lovo.ai/reference/sync-tts
 common:
 - type: AgenticAccess
   url: agentic-access/lovo-ai-agentic-access.yml
