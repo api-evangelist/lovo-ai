@@ -1,0 +1,18 @@
+{
+  "provider": "lovo-ai",
+  "sources": [
+    "lovo-ai-speakers-api-openapi.yml",
+    "lovo-ai-teams-api-openapi.yml",
+    "lovo-ai-text-to-speech-api-openapi.yml"
+  ],
+  "outputs": [
+    "lovo-ai-speakers-api-openapi.yml",
+    "lovo-ai-teams-api-openapi.yml",
+    "lovo-ai-text-to-speech-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
