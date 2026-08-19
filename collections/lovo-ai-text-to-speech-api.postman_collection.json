@@ -1,0 +1,951 @@
+{
+  "item": [
+    {
+      "id": "66c7758f-11d9-42f4-8901-f75049e9be43",
+      "name": "Text-to-Speech",
+      "description": {
+        "content": "Convert text to speech synchronously or asynchronously and retrieve job results.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5ac674aa-2234-4a42-aeb4-718e2105d8c5",
+          "name": "Async TTS",
+          "request": {
+            "name": "Async TTS",
+            "description": {
+              "content": "Returns a TTS job. Poll the job status with GET /api/v1/tts/{jobId} using the returned id, or supply callbackUrls to be notified on completion.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "tts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-KEY"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"<string>\",\n  \"speaker\": \"<string>\",\n  \"speakerStyle\": \"<string>\",\n  \"speed\": 1,\n  \"callbackUrls\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "329bc69e-2590-4fb2-aead-1d52eb590cd5",
+              "name": "Job entity used to fetch the status of the TTS job.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"643e383551e2730025c5ae69\",\n  \"type\": \"dubbing\",\n  \"status\": \"in_progress\",\n  \"progress\": 1929.626162455983,\n  \"team\": \"string\",\n  \"createdAt\": \"1949-03-15T13:49:54.584Z\",\n  \"callbackUrls\": [\n    \"string\",\n    \"string\"\n  ],\n  \"workspace\": \"string\",\n  \"project\": \"string\",\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  },\n  \"estimatedTimeAt\": \"1987-06-23T22:18:25.373Z\",\n  \"estimatedTimeMs\": 6254.798721819469\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3eea97bb-8431-49ea-87b4-15137cf36e9e",
+              "name": "API key expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6bcf0b71-001f-46b3-a6bc-edfb99df24b7",
+              "name": "API key invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c0bbdb38-cea5-407a-ba3f-1c281dda86be",
+              "name": "No active subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "87fcab3e-86df-484b-b312-0e08ec6bac01",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a011fed-2eb3-4a4a-a35a-5476c3b1da84",
+          "name": "Sync TTS",
+          "request": {
+            "name": "Sync TTS",
+            "description": {
+              "content": "Convert text to speech synchronously. Has a timeout of 90 seconds; if the process does not complete in time, it returns a pending TTS job (like Async TTS) whose status can be checked with GET /api/v1/tts/{jobId}.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "tts",
+                "sync"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-KEY"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"<string>\",\n  \"speaker\": \"<string>\",\n  \"speakerStyle\": \"<string>\",\n  \"speed\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94ed3cb3-6c0a-40dc-993e-a4ace58ab184",
+              "name": "Generated audio URLs if completed within 90 seconds, otherwise an incomplete TTS job.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"callbackUrls\": [\n    \"string\",\n    \"string\"\n  ],\n  \"createdAt\": \"1954-12-15T03:49:34.106Z\",\n  \"data\": [\n    {\n      \"status\": \"pending\",\n      \"text\": \"string\",\n      \"speaker\": \"string\",\n      \"speakerStyle\": \"string\",\n      \"speed\": 9806.64275367617,\n      \"pause\": [\n        {\n          \"position\": 9491.708524741707,\n          \"value\": 0.8192124608193825\n        },\n        {\n          \"position\": 5552.694151062191,\n          \"value\": 0.23654583910385063\n        }\n      ],\n      \"emphasis\": [\n        {\n          \"position\": 4439.8167427932085,\n          \"value\": 0.5\n        },\n        {\n          \"position\": 4705.679831713406,\n          \"value\": 0.75\n        }\n      ],\n      \"urls\": [\n        \"string\",\n        \"string\"\n      ],\n      \"error\": {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    },\n    {\n      \"status\": \"pending\",\n      \"text\": \"string\",\n      \"speaker\": \"string\",\n      \"speakerStyle\": \"string\",\n      \"speed\": 1623.891443527412,\n      \"pause\": [\n        {\n          \"position\": 6192.827570856698,\n          \"value\": 1.0375188646403422\n        },\n        {\n          \"position\": 7718.665289043307,\n          \"value\": 1.141246880851705\n        }\n      ],\n      \"emphasis\": [\n        {\n          \"position\": 764.7677941457631,\n          \"value\": 0.75\n        },\n        {\n          \"position\": 6820.677189499937,\n          \"value\": 0.5\n        }\n      ],\n      \"urls\": [\n        \"string\",\n        \"string\"\n      ],\n      \"error\": {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    }\n  ],\n  \"id\": \"643e383551e2730025c5ae69\",\n  \"progress\": 1416.4687907479101,\n  \"status\": \"done\",\n  \"team\": \"string\",\n  \"type\": \"tts\",\n  \"workspace\": \"string\",\n  \"project\": \"string\",\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  },\n  \"estimatedTimeAt\": \"2015-08-22T15:55:29.105Z\",\n  \"estimatedTimeMs\": 7709.638456921679\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b259e26-b103-40bb-8703-ac5734286e4f",
+              "name": "API key expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "22df1c14-2d95-40ca-9a80-cdbb99bb5961",
+              "name": "API key invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4e2b576d-6413-480f-8846-ef5fac7979a3",
+              "name": "No active subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fa1f8e1f-f0e9-40e9-90b0-0f95d7810331",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"speaker\": \"640f477d2babeb0024be422b\",\n  \"text\": \"Welcome to Genny!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26f87f01-d2e6-475d-8bba-0465fc0f5173",
+          "name": "Async Retrieve Job",
+          "request": {
+            "name": "Async Retrieve Job",
+            "description": {
+              "content": "Retrieve a TTS job by id. Returns generated audio URLs if the job is successfully completed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "tts",
+                ":jobId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) The job id returned by an Async or Sync TTS request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-KEY"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "752ad8ef-e079-4a0f-a670-b65cfcd9a9ac",
+              "name": "The TTS job, including audio URLs when completed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The job id returned by an Async or Sync TTS request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"callbackUrls\": [\n    \"string\",\n    \"string\"\n  ],\n  \"createdAt\": \"1947-11-17T08:11:53.706Z\",\n  \"data\": [\n    {\n      \"status\": \"failed\",\n      \"text\": \"string\",\n      \"speaker\": \"string\",\n      \"speakerStyle\": \"string\",\n      \"speed\": 5966.870051449297,\n      \"pause\": [\n        {\n          \"position\": 5663.73314636572,\n          \"value\": 1.4106284478146767\n        },\n        {\n          \"position\": 4360.680694313971,\n          \"value\": 1.568312012972904\n        }\n      ],\n      \"emphasis\": [\n        {\n          \"position\": 9068.816967615498,\n          \"value\": 0.75\n        },\n        {\n          \"position\": 3046.60457636474,\n          \"value\": 0.5\n        }\n      ],\n      \"urls\": [\n        \"string\",\n        \"string\"\n      ],\n      \"error\": {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    },\n    {\n      \"status\": \"pending\",\n      \"text\": \"string\",\n      \"speaker\": \"string\",\n      \"speakerStyle\": \"string\",\n      \"speed\": 798.7640790563166,\n      \"pause\": [\n        {\n          \"position\": 3959.3992784996044,\n          \"value\": 1.6195333580038278\n        },\n        {\n          \"position\": 6081.789779581498,\n          \"value\": 0.7247289850062735\n        }\n      ],\n      \"emphasis\": [\n        {\n          \"position\": 5624.214432610285,\n          \"value\": 0.75\n        },\n        {\n          \"position\": 192.72949199381938,\n          \"value\": 0.5\n        }\n      ],\n      \"urls\": [\n        \"string\",\n        \"string\"\n      ],\n      \"error\": {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    }\n  ],\n  \"id\": \"643e383551e2730025c5ae69\",\n  \"progress\": 4705.490717321097,\n  \"status\": \"in_progress\",\n  \"team\": \"string\",\n  \"type\": \"localization\",\n  \"workspace\": \"string\",\n  \"project\": \"string\",\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  },\n  \"estimatedTimeAt\": \"1994-07-27T14:43:25.195Z\",\n  \"estimatedTimeMs\": 7764.291054291468\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16ce70e7-79a4-4847-aa1f-c9e818f03c9a",
+              "name": "API key expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The job id returned by an Async or Sync TTS request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "86c44623-cbdb-4fbf-b168-ea511d398d12",
+              "name": "API key invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The job id returned by an Async or Sync TTS request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3bb86a73-c313-48d0-b2fe-0c5be549a025",
+              "name": "Job not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "tts",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) The job id returned by an Async or Sync TTS request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.genny.lovo.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ccdbe32c-fea2-4e49-b689-2898271e050f",
+    "name": "LOVO AI Genny Speakers Text-to-Speech API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for LOVO AI's Genny text-to-speech and AI voice generation platform. Convert text into natural-sounding speech (synchronously or asynchronously), browse the speaker/voice catalog with its styles, and read team billing/usage information. Authenticate every request with the X-API-KEY header carrying an API key generated at https://genny.lovo.ai. TTS credits are deducted from the account associated with the API key. Generated audio URLs are valid for 24 hours and should be downloaded for further use. Endpoints and schemas here are grounded in Genny's published OpenAPI document at https://api.genny.lovo.ai/api/docs-json.\n\nContact Support:\n Name: LOVO AI",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LOVO AI Genny Speakers Text-to-Speech API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Text-to-Speech",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Async TTS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.genny.lovo.ai/api/v1/tts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a TTS job. Poll the job status with GET /api/v1/tts/{jobId} using the returned id, or supply callbackUrls to be notified on completion."
+        },
+        {
+          "info": {
+            "name": "Sync TTS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.genny.lovo.ai/api/v1/tts/sync",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Convert text to speech synchronously. Has a timeout of 90 seconds; if the process does not complete in time, it returns a pending TTS job (like Async TTS) whose status can be checked with GET /api/v1/tts/{jobId}."
+        },
+        {
+          "info": {
+            "name": "Async Retrieve Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.genny.lovo.ai/api/v1/tts/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The job id returned by an Async or Sync TTS request."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a TTS job by id. Returns generated audio URLs if the job is successfully completed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

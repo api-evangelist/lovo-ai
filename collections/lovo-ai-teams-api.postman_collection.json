@@ -1,0 +1,275 @@
+{
+  "item": [
+    {
+      "id": "e9cf5456-4921-44de-8d82-cb4d0da381e2",
+      "name": "Teams",
+      "description": {
+        "content": "Read team billing and usage information for the API key's account.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b0f70bf1-7f98-450b-973c-10aeeea864c7",
+          "name": "Get team billing information",
+          "request": {
+            "name": "Get team billing information",
+            "description": {
+              "content": "Get team billing and usage information for the account associated with the API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-KEY"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7fa7fb56-6c5a-4f4b-96a3-4a0779137345",
+              "name": "Team billing information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"team\": {\n    \"name\": \"string\",\n    \"createdAt\": \"2011-12-15T10:40:58.526Z\"\n  },\n  \"subscription\": {\n    \"status\": \"canceled\",\n    \"currentPeriodStart\": \"1958-12-31T12:24:39.490Z\",\n    \"currentPeriodEnd\": \"1987-10-26T02:43:25.220Z\",\n    \"priceInterval\": \"day\",\n    \"usage\": [\n      {\n        \"type\": \"string\",\n        \"unit\": \"string\",\n        \"amount\": \"string\",\n        \"currentPeriodStart\": \"1957-10-18T10:38:20.263Z\",\n        \"currentPeriodEnd\": \"1952-07-09T23:06:17.445Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"unit\": \"string\",\n        \"amount\": \"string\",\n        \"currentPeriodStart\": \"1950-03-25T23:05:36.173Z\",\n        \"currentPeriodEnd\": \"2018-10-25T19:18:02.540Z\"\n      }\n    ],\n    \"description\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7bc749f-63d6-404e-93d9-c3ceb84af3c0",
+              "name": "API key expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b74e8fc8-3679-4371-ae8a-eb2a4f89f660",
+              "name": "API key invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b70abfad-b233-4a61-bda7-f8e7948b9d86",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.genny.lovo.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5a0b9811-c52b-4cd3-bce1-dba0cde7402d",
+    "name": "LOVO AI Genny Speakers Teams API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for LOVO AI's Genny text-to-speech and AI voice generation platform. Convert text into natural-sounding speech (synchronously or asynchronously), browse the speaker/voice catalog with its styles, and read team billing/usage information. Authenticate every request with the X-API-KEY header carrying an API key generated at https://genny.lovo.ai. TTS credits are deducted from the account associated with the API key. Generated audio URLs are valid for 24 hours and should be downloaded for further use. Endpoints and schemas here are grounded in Genny's published OpenAPI document at https://api.genny.lovo.ai/api/docs-json.\n\nContact Support:\n Name: LOVO AI",
+      "type": "text/plain"
+    }
+  }
+}

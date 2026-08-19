@@ -1,0 +1,341 @@
+{
+  "item": [
+    {
+      "id": "e0da41b8-cb5e-4006-a713-ec52895e3fe8",
+      "name": "Speakers",
+      "description": {
+        "content": "Retrieve the catalog of speakers/voices and their styles.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b0b06ddc-fc56-47a8-b7a9-aa2fd62fd2f0",
+          "name": "Retrieve speakers",
+          "request": {
+            "name": "Retrieve speakers",
+            "description": {
+              "content": "Retrieve all speakers with optional filtering and sorting. Supports pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "speakers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "displayName:1",
+                  "description": "Sort by given order. Available fields are displayName, locale, gender, speakerType, and ageRange. Example \"displayName:1\" (no whitespace)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<number>",
+                  "description": "Number of pages to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<number>",
+                  "description": "Number of speakers in each page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-KEY"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c3eb32f5-d4eb-4917-adb2-e344dd718c57",
+              "name": "A paginated list of speakers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "speakers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "displayName:1"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalCount\": 3097.451152606335,\n  \"count\": 6918.908431232743,\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"displayName\": \"string\",\n      \"locale\": \"string\",\n      \"gender\": \"male\",\n      \"imageUrl\": \"string\",\n      \"ageRange\": \"old\",\n      \"speakerStyles\": {\n        \"id\": \"string\",\n        \"displayName\": \"string\",\n        \"deprecated\": true,\n        \"sampleTtsUrl\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"displayName\": \"string\",\n      \"locale\": \"string\",\n      \"gender\": \"male\",\n      \"imageUrl\": \"string\",\n      \"ageRange\": \"mature\",\n      \"speakerStyles\": {\n        \"id\": \"string\",\n        \"displayName\": \"string\",\n        \"deprecated\": true,\n        \"sampleTtsUrl\": \"string\"\n      }\n    }\n  ],\n  \"page\": 3302.7086305365374,\n  \"limit\": 4906.753690402158\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b658257d-b576-4f5d-be3a-827dc5af6380",
+              "name": "API key expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "speakers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "displayName:1"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6abc7e3d-590c-48e4-ac72-e7074cb318ff",
+              "name": "API key invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "speakers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "displayName:1"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "245e4c44-3bcc-4597-a8c0-8b1c077a5eb5",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "speakers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "displayName:1"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.genny.lovo.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "eceeaa41-8d3f-4ef9-8573-8f24711049f4",
+    "name": "LOVO AI Genny Speakers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for LOVO AI's Genny text-to-speech and AI voice generation platform. Convert text into natural-sounding speech (synchronously or asynchronously), browse the speaker/voice catalog with its styles, and read team billing/usage information. Authenticate every request with the X-API-KEY header carrying an API key generated at https://genny.lovo.ai. TTS credits are deducted from the account associated with the API key. Generated audio URLs are valid for 24 hours and should be downloaded for further use. Endpoints and schemas here are grounded in Genny's published OpenAPI document at https://api.genny.lovo.ai/api/docs-json.\n\nContact Support:\n Name: LOVO AI",
+      "type": "text/plain"
+    }
+  }
+}
