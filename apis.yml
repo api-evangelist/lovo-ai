@@ -27,6 +27,14 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/lovo-ai.png
 tags:
+- Artificial Intelligence
+- Text-to-Speech
+- TTS
+- Voice Generation
+- Voice Cloning
+- Speech Synthesis
+- Voiceover
+tags_raw:
 - AI
 - Text to Speech
 - TTS
@@ -66,6 +74,8 @@ apis:
   humanURL: https://docs.genny.lovo.ai/reference/async-tts
   baseURL: https://api.genny.lovo.ai/api/v1
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
