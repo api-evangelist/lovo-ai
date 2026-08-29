@@ -12,6 +12,18 @@ description: >-
   styles, per-conversion pronunciation, pause, and emphasis controls, and a
   team billing/usage endpoint. TTS credits are deducted from the account tied to
   the API key, and generated audio URLs are valid for 24 hours.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
