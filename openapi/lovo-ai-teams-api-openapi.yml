@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: LOVO AI Genny Speakers Teams API
+  title: LOVO AI Genny Teams API
   version: '1.0'
-  description: REST API for LOVO AI's Genny text-to-speech and AI voice generation platform. Convert text into natural-sounding speech (synchronously or asynchronously), browse the speaker/voice catalog with its styles, and read team billing/usage information. Authenticate every request with the X-API-KEY header carrying an API key generated at https://genny.lovo.ai. TTS credits are deducted from the account associated with the API key. Generated audio URLs are valid for 24 hours and should be downloaded for further use. Endpoints and schemas here are grounded in Genny's published OpenAPI document at https://api.genny.lovo.ai/api/docs-json.
+  description: REST API for LOVO AI's Genny text-to-speech and AI voice generation platform.
   contact:
     name: LOVO AI
     url: https://lovo.ai
@@ -58,6 +58,17 @@ components:
       - type
       - unit
       - amount
+    TeamForApiResDto:
+      type: object
+      properties:
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+      - name
+      - createdAt
     Subscription:
       type: object
       properties:
@@ -108,17 +119,6 @@ components:
       required:
       - team
       - subscription
-    TeamForApiResDto:
-      type: object
-      properties:
-        name:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-      required:
-      - name
-      - createdAt
   securitySchemes:
     X-API-KEY:
       type: apiKey
