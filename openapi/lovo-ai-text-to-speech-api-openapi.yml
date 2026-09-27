@@ -116,6 +116,80 @@ paths:
           description: Job not found
 components:
   schemas:
+    Pause:
+      type: object
+      description: A pause inserted at a position within the synthesized text.
+      properties:
+        position:
+          type: number
+          description: Character position at which the pause is inserted.
+        value:
+          type: number
+          minimum: 0
+          maximum: 2
+          description: Pause duration in seconds (0 to 2).
+      required:
+      - position
+      - value
+    TextToSpeechSyncResponse:
+      allOf:
+      - $ref: '#/components/schemas/GetJobResponse'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/TextToSpeechOutput'
+        required:
+        - data
+    TextToSpeechOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - pending
+          - succeeded
+          - failed
+          description: Status of the individual TTS output.
+        text:
+          type: string
+        speaker:
+          type: string
+        speakerStyle:
+          type: string
+        speed:
+          type: number
+        pause:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pause'
+        emphasis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Emphasis'
+        pronunciations:
+          type: array
+          default: []
+          items:
+            $ref: '#/components/schemas/Pronunciation'
+          description: Pronunciations applied to the TTS request.
+        urls:
+          type: array
+          items:
+            type: string
+          description: Audio URLs of the TTS result (valid for 24 hours).
+        error:
+          $ref: '#/components/schemas/JobErrorResponse'
+      required:
+      - status
+      - text
+      - speaker
+      - speakerStyle
+      - speed
+      - pause
+      - emphasis
+      - pronunciations
     TextToSpeechResponse:
       allOf:
       - $ref: '#/components/schemas/GetJobResponse'
@@ -137,18 +211,20 @@ components:
       required:
       - code
       - message
-    Pause:
+    Emphasis:
       type: object
-      description: A pause inserted at a position within the synthesized text.
+      description: An emphasis marker applied at a position within the synthesized text.
       properties:
         position:
           type: number
-          description: Character position at which the pause is inserted.
+          description: Character position at which emphasis is applied.
         value:
           type: number
-          minimum: 0
-          maximum: 2
-          description: Pause duration in seconds (0 to 2).
+          enum:
+          - 0.25
+          - 0.5
+          - 0.75
+          description: Emphasis strength.
       required:
       - position
       - value
@@ -208,6 +284,23 @@ components:
       required:
       - text
       - speaker
+    Pronunciation:
+      type: object
+      description: A word-level pronunciation override applied to a TTS conversion.
+      properties:
+        sourceWord:
+          type: string
+          description: The original word as written in the input text.
+        targetWord:
+          type: string
+          description: The replacement spelling/phonetic form used for synthesis.
+        isReplaced:
+          type: boolean
+          description: Whether the source word was replaced during synthesis.
+      required:
+      - sourceWord
+      - targetWord
+      - isReplaced
     GetJobResponse:
       type: object
       properties:
@@ -260,99 +353,6 @@ components:
       - team
       - createdAt
       - callbackUrls
-    Pronunciation:
-      type: object
-      description: A word-level pronunciation override applied to a TTS conversion.
-      properties:
-        sourceWord:
-          type: string
-          description: The original word as written in the input text.
-        targetWord:
-          type: string
-          description: The replacement spelling/phonetic form used for synthesis.
-        isReplaced:
-          type: boolean
-          description: Whether the source word was replaced during synthesis.
-      required:
-      - sourceWord
-      - targetWord
-      - isReplaced
-    TextToSpeechOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - pending
-          - succeeded
-          - failed
-          description: Status of the individual TTS output.
-        text:
-          type: string
-        speaker:
-          type: string
-        speakerStyle:
-          type: string
-        speed:
-          type: number
-        pause:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pause'
-        emphasis:
-          type: array
-          items:
-            $ref: '#/components/schemas/Emphasis'
-        pronunciations:
-          type: array
-          default: []
-          items:
-            $ref: '#/components/schemas/Pronunciation'
-          description: Pronunciations applied to the TTS request.
-        urls:
-          type: array
-          items:
-            type: string
-          description: Audio URLs of the TTS result (valid for 24 hours).
-        error:
-          $ref: '#/components/schemas/JobErrorResponse'
-      required:
-      - status
-      - text
-      - speaker
-      - speakerStyle
-      - speed
-      - pause
-      - emphasis
-      - pronunciations
-    Emphasis:
-      type: object
-      description: An emphasis marker applied at a position within the synthesized text.
-      properties:
-        position:
-          type: number
-          description: Character position at which emphasis is applied.
-        value:
-          type: number
-          enum:
-          - 0.25
-          - 0.5
-          - 0.75
-          description: Emphasis strength.
-      required:
-      - position
-      - value
-    TextToSpeechSyncResponse:
-      allOf:
-      - $ref: '#/components/schemas/GetJobResponse'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/TextToSpeechOutput'
-        required:
-        - data
   securitySchemes:
     X-API-KEY:
       type: apiKey

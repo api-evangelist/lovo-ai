@@ -62,6 +62,45 @@ paths:
           description: API key not found
 components:
   schemas:
+    GetSpeakersApiResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Speaker ID.
+        displayName:
+          type: string
+          description: Name of the speaker.
+        locale:
+          type: string
+          description: Locale of the speaker (for example en-US, en-GB, ko-KR).
+        gender:
+          type: string
+          enum:
+          - male
+          - female
+          - other
+        imageUrl:
+          type: string
+          description: Avatar URL of the speaker.
+        ageRange:
+          type: string
+          enum:
+          - child
+          - children
+          - young_adult
+          - mature
+          - mature_adult
+          - old
+          - other
+        speakerStyles:
+          $ref: '#/components/schemas/PublicSpeakerStyleResType'
+      required:
+      - id
+      - displayName
+      - locale
+      - gender
+      - imageUrl
     PaginatedResDto:
       type: object
       properties:
@@ -103,45 +142,6 @@ components:
       - displayName
       - deprecated
       - sampleTtsUrl
-    GetSpeakersApiResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Speaker ID.
-        displayName:
-          type: string
-          description: Name of the speaker.
-        locale:
-          type: string
-          description: Locale of the speaker (for example en-US, en-GB, ko-KR).
-        gender:
-          type: string
-          enum:
-          - male
-          - female
-          - other
-        imageUrl:
-          type: string
-          description: Avatar URL of the speaker.
-        ageRange:
-          type: string
-          enum:
-          - child
-          - children
-          - young_adult
-          - mature
-          - mature_adult
-          - old
-          - other
-        speakerStyles:
-          $ref: '#/components/schemas/PublicSpeakerStyleResType'
-      required:
-      - id
-      - displayName
-      - locale
-      - gender
-      - imageUrl
   securitySchemes:
     X-API-KEY:
       type: apiKey
