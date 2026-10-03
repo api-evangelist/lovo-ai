@@ -39,27 +39,6 @@ paths:
           description: API key not found
 components:
   schemas:
-    TeamForApiResDto:
-      type: object
-      properties:
-        name:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-      required:
-      - name
-      - createdAt
-    ApiTeamBillingInformationResDto:
-      type: object
-      properties:
-        team:
-          $ref: '#/components/schemas/TeamForApiResDto'
-        subscription:
-          $ref: '#/components/schemas/Subscription'
-      required:
-      - team
-      - subscription
     Subscription:
       type: object
       properties:
@@ -100,6 +79,16 @@ components:
       - currentPeriodEnd
       - priceInterval
       - usage
+    ApiTeamBillingInformationResDto:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/TeamForApiResDto'
+        subscription:
+          $ref: '#/components/schemas/Subscription'
+      required:
+      - team
+      - subscription
     ApiUsageResDto:
       type: object
       properties:
@@ -119,6 +108,17 @@ components:
       - type
       - unit
       - amount
+    TeamForApiResDto:
+      type: object
+      properties:
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+      - name
+      - createdAt
   securitySchemes:
     X-API-KEY:
       type: apiKey

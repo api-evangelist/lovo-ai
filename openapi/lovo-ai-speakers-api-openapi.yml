@@ -62,6 +62,29 @@ paths:
           description: API key not found
 components:
   schemas:
+    PaginatedResDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+          description: Total item count available for pagination.
+        count:
+          type: number
+          description: Item count for the current page.
+        page:
+          type: number
+          description: Current page number.
+        limit:
+          type: number
+          description: Limit of items per page.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetSpeakersApiResponse'
+      required:
+      - totalCount
+      - count
+      - data
     GetSpeakersApiResponse:
       type: object
       properties:
@@ -101,29 +124,6 @@ components:
       - locale
       - gender
       - imageUrl
-    PaginatedResDto:
-      type: object
-      properties:
-        totalCount:
-          type: number
-          description: Total item count available for pagination.
-        count:
-          type: number
-          description: Item count for the current page.
-        page:
-          type: number
-          description: Current page number.
-        limit:
-          type: number
-          description: Limit of items per page.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetSpeakersApiResponse'
-      required:
-      - totalCount
-      - count
-      - data
     PublicSpeakerStyleResType:
       type: object
       properties:
