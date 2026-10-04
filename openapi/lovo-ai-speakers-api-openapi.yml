@@ -85,6 +85,24 @@ components:
       - totalCount
       - count
       - data
+    PublicSpeakerStyleResType:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        deprecated:
+          type: boolean
+          description: Deprecated speaker styles should not be used in the TTS API.
+        sampleTtsUrl:
+          type: string
+          description: Sample TTS URL to preview the voice of the speaker.
+      required:
+      - id
+      - displayName
+      - deprecated
+      - sampleTtsUrl
     GetSpeakersApiResponse:
       type: object
       properties:
@@ -124,24 +142,6 @@ components:
       - locale
       - gender
       - imageUrl
-    PublicSpeakerStyleResType:
-      type: object
-      properties:
-        id:
-          type: string
-        displayName:
-          type: string
-        deprecated:
-          type: boolean
-          description: Deprecated speaker styles should not be used in the TTS API.
-        sampleTtsUrl:
-          type: string
-          description: Sample TTS URL to preview the voice of the speaker.
-      required:
-      - id
-      - displayName
-      - deprecated
-      - sampleTtsUrl
   securitySchemes:
     X-API-KEY:
       type: apiKey

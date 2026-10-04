@@ -116,34 +116,6 @@ paths:
           description: Job not found
 components:
   schemas:
-    Pronunciation:
-      type: object
-      description: A word-level pronunciation override applied to a TTS conversion.
-      properties:
-        sourceWord:
-          type: string
-          description: The original word as written in the input text.
-        targetWord:
-          type: string
-          description: The replacement spelling/phonetic form used for synthesis.
-        isReplaced:
-          type: boolean
-          description: Whether the source word was replaced during synthesis.
-      required:
-      - sourceWord
-      - targetWord
-      - isReplaced
-    TextToSpeechResponse:
-      allOf:
-      - $ref: '#/components/schemas/GetJobResponse'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/TextToSpeechOutput'
-        required:
-        - data
     Pause:
       type: object
       description: A pause inserted at a position within the synthesized text.
@@ -184,68 +156,34 @@ components:
       required:
       - text
       - speaker
-    JobErrorResponse:
+    TextToSpeechResponse:
+      allOf:
+      - $ref: '#/components/schemas/GetJobResponse'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/TextToSpeechOutput'
+        required:
+        - data
+    Pronunciation:
       type: object
+      description: A word-level pronunciation override applied to a TTS conversion.
       properties:
-        code:
+        sourceWord:
           type: string
-        message:
+          description: The original word as written in the input text.
+        targetWord:
           type: string
+          description: The replacement spelling/phonetic form used for synthesis.
+        isReplaced:
+          type: boolean
+          description: Whether the source word was replaced during synthesis.
       required:
-      - code
-      - message
-    GetJobResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 643e383551e2730025c5ae69
-          description: Job ID used to check the progress of the TTS job.
-        type:
-          type: string
-          enum:
-          - tts
-          - simple_tts
-          - dubbing
-          - localization
-          - subtitles
-          description: Type of the job. Currently only TTS is supported.
-        status:
-          type: string
-          enum:
-          - in_progress
-          - done
-        progress:
-          type: number
-        team:
-          type: string
-        workspace:
-          type: string
-        project:
-          type: string
-        error:
-          $ref: '#/components/schemas/JobErrorResponse'
-        createdAt:
-          type: string
-          format: date-time
-          description: TTS requested time.
-        estimatedTimeAt:
-          type: string
-          format: date-time
-        estimatedTimeMs:
-          type: number
-        callbackUrls:
-          type: array
-          items:
-            type: string
-      required:
-      - id
-      - type
-      - status
-      - progress
-      - team
-      - createdAt
-      - callbackUrls
+      - sourceWord
+      - targetWord
+      - isReplaced
     TextToSpeechOutput:
       type: object
       properties:
@@ -294,6 +232,16 @@ components:
       - pause
       - emphasis
       - pronunciations
+    JobErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
     TextToSpeechSyncResponse:
       allOf:
       - $ref: '#/components/schemas/GetJobResponse'
@@ -353,6 +301,58 @@ components:
       required:
       - text
       - speaker
+    GetJobResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 643e383551e2730025c5ae69
+          description: Job ID used to check the progress of the TTS job.
+        type:
+          type: string
+          enum:
+          - tts
+          - simple_tts
+          - dubbing
+          - localization
+          - subtitles
+          description: Type of the job. Currently only TTS is supported.
+        status:
+          type: string
+          enum:
+          - in_progress
+          - done
+        progress:
+          type: number
+        team:
+          type: string
+        workspace:
+          type: string
+        project:
+          type: string
+        error:
+          $ref: '#/components/schemas/JobErrorResponse'
+        createdAt:
+          type: string
+          format: date-time
+          description: TTS requested time.
+        estimatedTimeAt:
+          type: string
+          format: date-time
+        estimatedTimeMs:
+          type: number
+        callbackUrls:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - type
+      - status
+      - progress
+      - team
+      - createdAt
+      - callbackUrls
   securitySchemes:
     X-API-KEY:
       type: apiKey
