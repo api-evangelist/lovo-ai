@@ -1,4 +1,4 @@
-# LOVO AI (lovo-ai)
+# LOVO AI
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,123 +64,120 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-LOVO AI is an AI text-to-speech and voice generation platform. Its flagship product, Genny, turns text into natural-sounding speech across a large library of speakers, locales, and speaker styles, and adds AI voice cloning and voiceover tooling. The **Genny API** is a REST API (base `https://api.genny.lovo.ai`) authenticated with an `X-API-KEY` header carrying a key generated in the Genny app at [https://genny.lovo.ai](https://genny.lovo.ai). It exposes synchronous and asynchronous text-to-speech conversions, a speakers/voices catalog with styles, per-conversion pronunciation/pause/emphasis controls, and a team billing/usage endpoint.
+LOVO AI is an AI text-to-speech and voice generation platform whose flagship product, Genny, turns text into natural-sounding speech across a large library of speakers, locales, and speaker styles, plus AI voice cloning and voiceover tooling. The Genny API is a REST API (base https://api.genny.lovo.ai) authenticated with an X-API-KEY header. It exposes synchronous and asynchronous text-to-speech conversions, a speakers/voices catalog with styles, per-conversion pronunciation, pause, and emphasis controls, and a team billing/usage endpoint. TTS credits are deducted from the account tied to the API key, and generated audio URLs are valid for 24 hours.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/lovo-ai/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/lovo-ai/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · Text-to-Speech · TTS · Voice Generation · Voice Cloning · Speech Synthesis · Voiceover
 
-## Access Model
+## LOVO AI on APIs.io
 
-- **Authentication:** `X-API-KEY` header. Generate an API key in the Genny app (profile tab) at [https://genny.lovo.ai](https://genny.lovo.ai).
-- **Subscription required:** API access requires an active LOVO AI subscription. Keys without one receive a `402 No active subscription`. TTS credits are deducted from the account associated with the API key.
-- **Rate limit:** 20 requests per minute.
-- **Input limit:** Up to 500 characters of text per TTS conversion.
-- **Audio URLs:** Generated audio URLs are valid for 24 hours; download the result for further use.
-- **Async model:** Long-running TTS uses a job model - submit a job, then poll `GET /api/v1/tts/{jobId}` or register up to 4 `callbackUrls` that receive a single HTTP POST webhook on completion. There is **no** public WebSocket API.
+Everything profiled for LOVO AI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lovo-ai/](https://apis.io/providers/lovo-ai/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (3)
 
-- AI
-- Text to Speech
-- TTS
-- Voice Generation
-- Voice Cloning
-- Speech Synthesis
-- Voiceover
+- [LOVO AI Speakers API](https://apis.io/apis/lovo-ai/lovo-ai-speakers-api/) — Retrieve the catalog of speakers/voices and their styles.
+- [LOVO AI Teams API](https://apis.io/apis/lovo-ai/lovo-ai-teams-api/) — Read team billing and usage information for the API key's account.
+- [LOVO AI Text-to-Speech API](https://apis.io/apis/lovo-ai/lovo-ai-text-to-speech-api/) — Convert text to speech synchronously or asynchronously and retrieve job results.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-07-11
-- **Modified:** 2026-07-11
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### LOVO AI Text-to-Speech API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Convert text into natural-sounding speech. Submit an asynchronous job (`POST /tts`) and poll or receive a callback, or run a synchronous conversion (`POST /tts/sync`) with a 90-second timeout, then retrieve results and audio URLs by job id (`GET /tts/{jobId}`). Requests take `text` (up to 500 chars), a `speaker` id, an optional `speakerStyle`, and `speed`.
+- [Lovo Ai Agentic Access](https://apis.io/agentic-access/lovo-ai/lovo-ai-agentic-access/)
 
-- **Human URL:** [https://docs.genny.lovo.ai/reference/async-tts](https://docs.genny.lovo.ai/reference/async-tts)
-- **Base URL:** `https://api.genny.lovo.ai/api/v1`
+#### Collections (4)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- Text to Speech
-- Conversions
-- TTS
+- [LOVO AI Genny API](https://apis.io/collections/lovo-ai/open-lovo-ai/)
+- [LOVO AI Genny Speakers API](https://apis.io/collections/lovo-ai/open-lovo-ai-speakers-api/)
+- [LOVO AI Genny Speakers Teams API](https://apis.io/collections/lovo-ai/open-lovo-ai-teams-api/)
+- [LOVO AI Genny Speakers Text-to-Speech API](https://apis.io/collections/lovo-ai/open-lovo-ai-text-to-speech-api/)
 
-#### Properties
+#### Security (2)
 
-- [Documentation](https://docs.genny.lovo.ai/reference/intro/getting-started)
-- [API Reference](https://docs.genny.lovo.ai/reference/async-tts)
-- [OpenAPI](openapi/lovo-ai-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/lovo-ai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/lovo-ai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### LOVO AI Speakers API
+- [Lovo Ai Authentication](https://apis.io/security/lovo-ai/lovo-ai-authentication/)
+- [Lovo Ai Domain Security](https://apis.io/security/lovo-ai/lovo-ai-domain-security/)
 
-Browse the Genny voice catalog. Retrieve speakers (`GET /speakers`) with pagination and sorting by displayName, locale, gender, speakerType, and ageRange. Each speaker exposes its id, locale, gender, avatar, age range, and available speaker styles with sample audio URLs - the speaker ids used when requesting a TTS conversion.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://docs.genny.lovo.ai/reference/retrieve-speakers](https://docs.genny.lovo.ai/reference/retrieve-speakers)
-- **Base URL:** `https://api.genny.lovo.ai/api/v1`
+Published plans, tiers and prices.
 
-#### Tags
+- [Lovo Ai Plans Pricing](https://apis.io/plans/lovo-ai/lovo-ai-plans-pricing/)
 
-- Speakers
-- Voices
-- Catalog
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [API Reference](https://docs.genny.lovo.ai/reference/retrieve-speakers)
-- [OpenAPI](openapi/lovo-ai-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/lovo-ai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/lovo-ai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Lovo Ai Rate Limits](https://apis.io/rate-limits/lovo-ai/lovo-ai-rate-limits/)
 
-### LOVO AI Pronunciation and Prosody
+#### FinOps (1)
 
-Pronunciation, pause, and emphasis controls applied to a TTS conversion. These are modeled honestly as data structures on the TTS output (word-level pronunciation replacements, timed pauses of 0-2 seconds, and emphasis markers), not as a standalone endpoint - they are carried within the text-to-speech job payload rather than a dedicated `/pronunciations` resource.
+What the API costs to run, by operation.
 
-- **Human URL:** [https://docs.genny.lovo.ai/reference/sync-tts](https://docs.genny.lovo.ai/reference/sync-tts)
-- **Base URL:** `https://api.genny.lovo.ai/api/v1`
+- [Lovo Ai Finops](https://apis.io/finops/lovo-ai/lovo-ai-finops/)
 
-#### Tags
+## Where to find this API
 
-- Pronunciation
-- Pause
-- Emphasis
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://docs.genny.lovo.ai/reference/sync-tts)
-- [OpenAPI](openapi/lovo-ai-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-### LOVO AI Teams and Billing API
-
-Read team billing and usage information for the account tied to the API key (`GET /teams/status`). Returns the team name, subscription status and billing interval, current period start/end, and metered usage entries - useful for tracking API credit consumption.
-
-- **Human URL:** [https://docs.genny.lovo.ai/reference/intro/getting-started](https://docs.genny.lovo.ai/reference/intro/getting-started)
-- **Base URL:** `https://api.genny.lovo.ai/api/v1`
-
-#### Tags
-
-- Billing
-- Usage
-- Teams
-
-#### Properties
-
-- [Documentation](https://docs.genny.lovo.ai/reference/intro/getting-started)
-- [OpenAPI](openapi/lovo-ai-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/lovo-ai)
 - [Website](https://lovo.ai)
 - [Documentation](https://docs.genny.lovo.ai)
-- [Plans](plans/lovo-ai-plans-pricing.yml)
-- [Rate Limits](rate-limits/lovo-ai-rate-limits.yml)
-- [Fin Ops](finops/lovo-ai-finops.yml)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 24.5** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 51.4 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 21.4 |
+| Access clarity | 7.9 |
+
+**Agent readiness 20.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.5** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lovo-ai/](https://apis.io/providers/lovo-ai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LOVO AI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lovo-ai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
